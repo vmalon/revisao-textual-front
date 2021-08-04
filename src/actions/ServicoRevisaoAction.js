@@ -6,8 +6,6 @@ const getServicosRevisao = () => async dispatch => {
     dispatch({
         type: GET_SERVICOS_REVISAO,
         payload: res.data
-
-
     });
 };
 export default getServicosRevisao;

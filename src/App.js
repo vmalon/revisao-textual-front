@@ -9,8 +9,9 @@ import ServicoRevisao from './components/ServicoRevisao';
 function App() {
   return (
     <Provider store={store}>
-      <div className="container">
+      <div>
         <Header></Header>
+        <h4 style={{textAlign: 'center'}}>Confira os Serviços de Revisão disponíveis</h4>
         <ServicoRevisao />
       </div>
     </Provider>

@@ -2,40 +2,52 @@ import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import getServicosRevisao from "../actions/ServicoRevisaoAction";
-import Table from 'react-bootstrap/Table';
+import '../components/style.css';
+import css from '../components/card.module.css';
 
 const ServicoRevisao = (props) => {
     const getServicosRevisao = props.getServicosRevisao;
-    
+
     useEffect(() => {
         getServicosRevisao();
     }, [getServicosRevisao]);
-    
+
     const { servicosRevisao } = props.servicoRevisaoReducer;
-    console.log(props);
+    console.log(servicosRevisao);
 
     return (
-        <div>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Cód.</th>
-                        <th>Serviço</th>
-                        <th>Descrição</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {servicosRevisao.map((product, idx) => {
+        <div className={css.body}>
+            <main className="cards">
+                {
+                    servicosRevisao.map((servico, idx) => {
                         return (
-                            <tr key={idx}>
-                                <td>{product.id}</td>
-                                <td>{product.descricao}</td>
-                                <td>{product.caracteristicas}</td>
-                            </tr>
+                            <section className="card contact" key={idx}>
+                                <h3>{servico.descricao}</h3>
+                                <span>{servico.caracteristicas}</span>
+                                <div>
+                                    {
+                                        servico.servicoValores.map((servicoValor, idx) => {
+                                            if (servicoValor.formaPagamento == 'POR_PAGINA') {
+                                                servicoValor.formaPagamento = 'Por página';
+                                            } if (servicoValor.formaPagamento == 'POR_LAUDA') {
+                                                servicoValor.formaPagamento = 'Por lauda';
+                                            } if (servicoValor.formaPagamento == 'POR_PALAVRA') {
+                                                servicoValor.formaPagamento = 'Por palavra';
+                                            }
+                                            return (
+                                                <p key={idx}>
+                                                    {servicoValor.formaPagamento} : R$ {servicoValor.valor}
+                                                </p>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                <button>Realizar Orçamento</button>
+                            </section>
                         )
-                    })}
-                </tbody>
-            </Table>
+                    })
+                }
+            </main>
         </div>
     );
 };
